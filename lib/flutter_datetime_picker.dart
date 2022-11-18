@@ -23,6 +23,7 @@ class DatePicker {
   static Future<DateTime?> showDatePicker(
     BuildContext context, {
     bool showTitleActions: true,
+    Widget? customTitleView,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
@@ -36,6 +37,7 @@ class DatePicker {
       context,
       _DatePickerRoute(
         showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -59,6 +61,7 @@ class DatePicker {
   static Future<DateTime?> showTimePicker(
     BuildContext context, {
     bool showTitleActions: true,
+    Widget? customTitleView,
     bool showSecondsColumn: true,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
@@ -71,6 +74,7 @@ class DatePicker {
       context,
       _DatePickerRoute(
         showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -93,6 +97,7 @@ class DatePicker {
   static Future<DateTime?> showTime12hPicker(
     BuildContext context, {
     bool showTitleActions: true,
+    Widget? customTitleView,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
     DateCancelledCallback? onCancel,
@@ -104,6 +109,7 @@ class DatePicker {
       context,
       _DatePickerRoute(
         showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -125,6 +131,7 @@ class DatePicker {
   static Future<DateTime?> showDateTimePicker(
     BuildContext context, {
     bool showTitleActions: true,
+    Widget? customTitleView,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
@@ -138,6 +145,7 @@ class DatePicker {
       context,
       _DatePickerRoute(
         showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -161,6 +169,7 @@ class DatePicker {
   static Future<DateTime?> showPicker(
     BuildContext context, {
     bool showTitleActions: true,
+    Widget? customTitleView,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
     DateCancelledCallback? onCancel,
@@ -172,6 +181,7 @@ class DatePicker {
       context,
       _DatePickerRoute(
         showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -188,6 +198,7 @@ class DatePicker {
 class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
     this.showTitleActions,
+    this.customTitleView,
     this.onChanged,
     this.onConfirm,
     this.onCancel,
@@ -201,6 +212,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         super(settings: settings);
 
   final bool? showTitleActions;
+  final Widget? customTitleView;
   final DateChangedCallback? onChanged;
   final DateChangedCallback? onConfirm;
   final DateCancelledCallback? onCancel;
@@ -309,6 +321,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
               ),
               child: GestureDetector(
                 child: Material(
+                  borderRadius: theme.borderRadius,
                   color: theme.backgroundColor,
                   child: _renderPickerView(theme),
                 ),
@@ -331,7 +344,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
     if (widget.route.showTitleActions == true) {
       return Column(
         children: <Widget>[
-          _renderTitleActionsView(theme),
+          widget.route.customTitleView ?? _renderTitleActionsView(theme),
           itemView,
         ],
       );
@@ -479,6 +492,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
       height: theme.titleHeight,
       decoration: BoxDecoration(
         color: theme.headerColor ?? theme.backgroundColor,
+        borderRadius: theme.borderRadius,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -130,8 +130,26 @@ class HomePage extends StatelessWidget {
                 )),
             TextButton(
                 onPressed: () {
-                  DatePicker.showTimePicker(context, showTitleActions: true,
-                      onChanged: (date) {
+                  DatePicker.showTimePicker(context,
+                      showTitleActions: true,
+                      customTitleView: SizedBox(
+                        height: 40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Done'),
+                            ),
+                          ],
+                        ),
+                      ), onChanged: (date) {
                     print('change $date in time zone ' +
                         date.timeZoneOffset.inHours.toString());
                   }, onConfirm: (date) {
