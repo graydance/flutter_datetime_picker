@@ -3,7 +3,6 @@ library flutter_datetime_picker;
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_datetime_picker/src/datetime_picker_theme.dart';
 import 'package:flutter_datetime_picker/src/date_model.dart';
 import 'package:flutter_datetime_picker/src/i18n_model.dart';
@@ -24,6 +23,7 @@ class DatePicker {
     BuildContext context, {
     bool showTitleActions: true,
     Widget? customTitleView,
+    Widget? customBottomView,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
@@ -38,6 +38,7 @@ class DatePicker {
       _DatePickerRoute(
         showTitleActions: showTitleActions,
         customTitleView: customTitleView,
+        customBottomView: customBottomView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -62,6 +63,7 @@ class DatePicker {
     BuildContext context, {
     bool showTitleActions: true,
     Widget? customTitleView,
+    Widget? customBottomView,
     bool showSecondsColumn: true,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
@@ -75,6 +77,7 @@ class DatePicker {
       _DatePickerRoute(
         showTitleActions: showTitleActions,
         customTitleView: customTitleView,
+        customBottomView: customBottomView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -98,6 +101,7 @@ class DatePicker {
     BuildContext context, {
     bool showTitleActions: true,
     Widget? customTitleView,
+    Widget? customBottomView,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
     DateCancelledCallback? onCancel,
@@ -110,6 +114,7 @@ class DatePicker {
       _DatePickerRoute(
         showTitleActions: showTitleActions,
         customTitleView: customTitleView,
+        customBottomView: customBottomView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -132,6 +137,7 @@ class DatePicker {
     BuildContext context, {
     bool showTitleActions: true,
     Widget? customTitleView,
+    Widget? customBottomView,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
@@ -146,6 +152,7 @@ class DatePicker {
       _DatePickerRoute(
         showTitleActions: showTitleActions,
         customTitleView: customTitleView,
+        customBottomView: customBottomView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -170,6 +177,7 @@ class DatePicker {
     BuildContext context, {
     bool showTitleActions: true,
     Widget? customTitleView,
+    Widget? customBottomView,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
     DateCancelledCallback? onCancel,
@@ -182,6 +190,7 @@ class DatePicker {
       _DatePickerRoute(
         showTitleActions: showTitleActions,
         customTitleView: customTitleView,
+        customBottomView: customBottomView,
         onChanged: onChanged,
         onConfirm: onConfirm,
         onCancel: onCancel,
@@ -199,6 +208,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
     this.showTitleActions,
     this.customTitleView,
+    this.customBottomView,
     this.onChanged,
     this.onConfirm,
     this.onCancel,
@@ -213,6 +223,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
 
   final bool? showTitleActions;
   final Widget? customTitleView;
+  final Widget? customBottomView;
   final DateChangedCallback? onChanged;
   final DateChangedCallback? onConfirm;
   final DateCancelledCallback? onCancel;
@@ -346,9 +357,21 @@ class _DatePickerState extends State<_DatePickerComponent> {
         children: <Widget>[
           widget.route.customTitleView ?? _renderTitleActionsView(theme),
           itemView,
+          if (widget.route.customBottomView != null)
+            widget.route.customBottomView!
         ],
       );
     }
+
+    if (widget.route.customBottomView != null) {
+      return Column(
+        children: [
+          itemView,
+          widget.route.customBottomView!,
+        ],
+      );
+    }
+
     return itemView;
   }
 
@@ -562,7 +585,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    double maxHeight = theme.containerHeight;
+    double maxHeight = theme.containerHeight + theme.bottomHeight;
     if (showTitleActions == true) {
       maxHeight += theme.titleHeight;
     }

@@ -130,31 +130,41 @@ class HomePage extends StatelessWidget {
                 )),
             TextButton(
                 onPressed: () {
-                  DatePicker.showTimePicker(context,
-                      showTitleActions: true,
-                      customTitleView: SizedBox(
-                        height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Done'),
-                            ),
-                          ],
-                        ),
-                      ), onChanged: (date) {
-                    print('change $date in time zone ' +
-                        date.timeZoneOffset.inHours.toString());
-                  }, onConfirm: (date) {
-                    print('confirm $date');
-                  }, currentTime: DateTime.now());
+                  DatePicker.showTimePicker(
+                    context,
+                    theme: const DatePickerTheme(
+                      titleHeight: 44,
+                      bottomHeight: 40,
+                    ),
+                    showTitleActions: true,
+                    customTitleView: SizedBox(
+                      height: 44,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Done'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    customBottomView: Text('Timezone : Asia/Shanghai'),
+                    onChanged: (date) {
+                      print('change $date in time zone ' +
+                          date.timeZoneOffset.inHours.toString());
+                    },
+                    onConfirm: (date) {
+                      print('confirm $date');
+                    },
+                    currentTime: DateTime.now(),
+                  );
                 },
                 child: Text(
                   'show time picker',

@@ -12,6 +12,7 @@ class DatePickerTheme with DiagnosticableTreeMixin {
 
   final double containerHeight;
   final double titleHeight;
+  final double bottomHeight;
   final double itemHeight;
 
   final BorderRadius? borderRadius;
@@ -25,6 +26,7 @@ class DatePickerTheme with DiagnosticableTreeMixin {
     this.containerHeight = 210.0,
     this.titleHeight = 44.0,
     this.itemHeight = 36.0,
+    this.bottomHeight = 0,
     this.borderRadius = const BorderRadius.only(
       topLeft: Radius.circular(12),
       topRight: Radius.circular(12),
