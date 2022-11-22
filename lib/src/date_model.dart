@@ -839,9 +839,6 @@ class DateTimeHourPickerModel extends CommonPickerModel {
     var minute = 0;
     if (isAtSameDay(minTime, time)) {
       hour += minTime!.hour;
-      if (minTime!.hour == hour) {
-        minute += minTime!.minute;
-      }
     }
 
     return currentTime.isUtc
