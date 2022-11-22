@@ -202,8 +202,8 @@ class HomePage extends StatelessWidget {
                 )),
             TextButton(
                 onPressed: () {
-                  DatePicker.showDateTimePicker(context, showTitleActions: true,
-                      onChanged: (date) {
+                  DatePicker.showDateTimeHourPicker(context,
+                      showTitleActions: true, onChanged: (date) {
                     print('change $date in time zone ' +
                         date.timeZoneOffset.inHours.toString());
                   }, onConfirm: (date) {

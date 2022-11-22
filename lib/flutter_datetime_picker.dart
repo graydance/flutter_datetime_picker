@@ -202,6 +202,46 @@ class DatePicker {
       ),
     );
   }
+
+  ///
+  /// Display date&time picker bottom sheet.
+  ///
+  static Future<DateTime?> showDateTimeHourPicker(
+    BuildContext context, {
+    bool showTitleActions: true,
+    Widget? customTitleView,
+    Widget? customBottomView,
+    DateTime? minTime,
+    DateTime? maxTime,
+    DateChangedCallback? onChanged,
+    DateChangedCallback? onConfirm,
+    DateCancelledCallback? onCancel,
+    locale: LocaleType.en,
+    DateTime? currentTime,
+    DatePickerTheme? theme,
+  }) async {
+    return await Navigator.push(
+      context,
+      _DatePickerRoute(
+        showTitleActions: showTitleActions,
+        customTitleView: customTitleView,
+        customBottomView: customBottomView,
+        onChanged: onChanged,
+        onConfirm: onConfirm,
+        onCancel: onCancel,
+        locale: locale,
+        theme: theme,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        pickerModel: DateTimeHourPickerModel(
+          currentTime: currentTime,
+          minTime: minTime,
+          maxTime: maxTime,
+          locale: locale,
+        ),
+      ),
+    );
+  }
 }
 
 class _DatePickerRoute<T> extends PopupRoute<T> {
